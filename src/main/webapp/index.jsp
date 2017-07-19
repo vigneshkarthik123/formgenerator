@@ -1,8 +1,9 @@
 <html>
 <head>
 <title>FORM CREATOR</title>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.6.0/angular.min.js"></script>
 </head>
-<body>
+<body ng-app="myApp" ng-controller="myCtrl">
 <h2>Welcome to Form Generation</h2>
 <script>
 var app = angular.module('myApp', []);
@@ -10,20 +11,14 @@ app.controller('myCtrl', function($scope, $http) {
 
     //Initialize page with default data which is blank in this example
     $scope.objects = [];
+    $http.get("http://localhost:8080/FormGenerator/formcreators/261")
+    .then(function(response){
+    	$scope.formdata=response.data;
+    });
 
 });
-refreshPageData();
-//HTTP GET- get all employees collection
-function _refreshPageData() {
-    $http({
-        method : 'GET',
-        url : 'http://localhost:8080/FormGenerator/formcreators/261'
-    }).then(function successCallback(response) {
-        $scope.formdata = response.data.formdata;
-    }, function errorCallback(response) {
-        console.log(response.statusText);
-    });
-}
+
+
 </script>
 <style>
     .button {
@@ -42,19 +37,8 @@ function _refreshPageData() {
 <body>
 <div ng-app="myApp" ng-controller="myCtrl"> 
 
-<p>form data</p>
-<h1></h1>
-<table>
-  <tr>
-                <th>room Name</th>
-                <th>start time</th>
-          
-            </tr>
-  <tr ng-repeat="x in formdata">
-    <td>{{ formdata }}</td>
-    <td>{{ x.textbox }}</td>
-  </tr>
-</table>
+  
+ {{formdata}}
 
 
 </div>
